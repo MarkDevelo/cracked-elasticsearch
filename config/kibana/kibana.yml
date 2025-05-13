@@ -1,0 +1,30 @@
+# ./config/kibana/kibana.yml
+server.host: "0.0.0.0"
+server.name: "kibana_cr"
+
+elasticsearch.hosts: ["https://elasticsearch:9200"]
+# monitoring.ui.container.elasticsearch.enabled: true # This line is fine
+
+# SSL communication with Elasticsearch
+elasticsearch.ssl.verificationMode: certificate
+elasticsearch.ssl.certificateAuthorities:
+  - /usr/share/kibana/config/certs/ca/ca.crt
+
+# Kibana serves HTTPS
+server.ssl.enabled: true
+server.ssl.certificate: /usr/share/kibana/config/certs/kibana/kibana.crt
+server.ssl.key: /usr/share/kibana/config/certs/kibana/kibana.key
+
+# Credentials for Kibana to connect to Elasticsearch
+# These are for the 'kibana_system' user that Elasticsearch creates.
+# The password should match the ELASTIC_PASSWORD you set for Elasticsearch.
+elasticsearch.username: "kibana_system"
+elasticsearch.password: "replace_me"
+
+xpack.encryptedSavedObjects.encryptionKey: "generate_a_very_long_random_string_here_1"
+xpack.reporting.encryptionKey: "generate_a_very_long_random_string_here_2"
+xpack.security.encryptionKey: "generate_a_very_long_random_string_here_3"
+
+# You can now try adding xpack.security.enabled back here if you want,
+# but if it causes the old error, rely on the environment variable for it.
+# xpack.security.enabled: true

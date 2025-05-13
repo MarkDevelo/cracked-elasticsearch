@@ -1,0 +1,24 @@
+# ./config/certificates/instances.yml
+# This defines the instances for which certificates will be generated.
+# 'ca' is special and will generate a CA certificate and key.
+# Other instances will have their certificates signed by this CA.
+
+instances:
+  - name: ca
+    # No specific dns or ip needed for the CA itself when generating this way
+
+  - name: elasticsearch
+    dns:
+      - elasticsearch  # Docker service name
+      - localhost
+    ip:
+      - 127.0.0.1
+    # Add any other DNS names or IPs if ES will be accessed differently
+
+  - name: kibana
+    dns:
+      - kibana         # Docker service name
+      - localhost
+    ip:
+      - 127.0.0.1
+    # Add any other DNS names if Kibana will be accessed differently

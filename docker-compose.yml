@@ -1,0 +1,71 @@
+
+services:
+  tls-setup:
+    profiles:
+      - setup
+    image: elasticsearch:${ES_VERSION} # Relies on .env for ES_VERSION
+    container_name: elk_tls_setup_runner
+    user: "0:0"
+    volumes:
+      - ./scripts/generate-certs.sh:/generate-certs.sh:ro
+      - ./config/certificates/instances.yml:/instances.yml:ro
+      - ./es_host_config/certs:/certs_output:rw
+    command: ["/bin/bash", "/generate-certs.sh", "/instances.yml", "/certs_output"]
+
+  elasticsearch:
+    image: elasticsearch:${ES_VERSION}
+    container_name: elasticsearch_cr
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD} # From .env
+      bootstrap.memory_lock: true
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+    ulimits:
+      memlock: { soft: -1, hard: -1 }
+      nofile: { soft: 65536, hard: 65536 }
+    volumes:
+      - ./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./es_host_data:/usr/share/elasticsearch/data:rw,Z
+      - ./crack/x-pack-core-${ES_VERSION}.crack.jar:/usr/share/elasticsearch/modules/x-pack-core/x-pack-core-${ES_VERSION}.jar:ro,Z
+      - ./es_host_config/certs/ca/ca.crt:/usr/share/elasticsearch/config/certs/ca/ca.crt:ro,Z
+      - ./es_host_config/certs/elasticsearch/elasticsearch.crt:/usr/share/elasticsearch/config/certs/elasticsearch/elasticsearch.crt:ro,Z
+      - ./es_host_config/certs/elasticsearch/elasticsearch.key:/usr/share/elasticsearch/config/certs/elasticsearch/elasticsearch.key:ro,Z
+    ports:
+      - "9200:9200"
+    networks:
+      - elk_net
+    healthcheck:
+       test: ["CMD-SHELL", "curl -s --cacert /usr/share/elasticsearch/config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} https://localhost:9200/_cluster/health | grep -q '\"status\":\"green\"\\|\"status\":\"yellow\"'"]
+       interval: 30s
+       timeout: 10s
+       retries: 5
+
+  kibana:
+    image: kibana:${ES_VERSION}
+    container_name: kibana_cr
+    restart: unless-stopped
+    environment:
+      ELASTICSEARCH_HOSTS: https://elasticsearch:9200 # Still useful, though also in kibana.yml
+      # KIBANA_SYSTEM_PASSWORD from .env is used by start-elk.sh to set the actual password
+      # Kibana will use ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD for its internal ES connection
+      ELASTICSEARCH_USERNAME: "kibana_system"
+      ELASTICSEARCH_PASSWORD: ${KIBANA_SYSTEM_PASSWORD} # Docker Compose substitutes this from .env
+      NODE_OPTIONS: "--no-openssl-legacy-provider"
+      XPACK_SECURITY_ENABLED: "true" # Explicitly enable security via env
+    volumes:
+      - ./config/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+      - ./es_host_config/certs/ca/ca.crt:/usr/share/kibana/config/certs/ca/ca.crt:ro,Z
+      - ./es_host_config/certs/kibana/kibana.crt:/usr/share/kibana/config/certs/kibana/kibana.crt:ro,Z
+      - ./es_host_config/certs/kibana/kibana.key:/usr/share/kibana/config/certs/kibana/kibana.key:ro,Z
+    ports:
+      - "5601:5601"
+    networks:
+      - elk_net
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+networks:
+  elk_net:
+    driver: bridge
