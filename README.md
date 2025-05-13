@@ -22,7 +22,7 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
     mv .env.example .env
     ```
 
-2. **Edit the .env file to setup the elastic version you want and other stuff:**
+3. **Edit the .env file to setup the elastic version you want and other stuff:**
     ```bash
     # .env - ELK Stack Configuration
     # Please edit ELASTIC_PASSWORD before the first full run.
@@ -34,13 +34,13 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
     # You can manually set it here if you reset it some other way and want docker-compose to use it.
     KIBANA_SYSTEM_PASSWORD=F21MZEMc=90Su6L5QU+u
     ```
-3. **Run the setup and installation scripts:**
+4. **Run the setup and installation scripts:**
     ```bash
     sudo ./setup-cracked-elk.sh
     sudo ./start-elk.sh
     ```
-4. **Now if everything went well without any errors, it should be up and runnning :)**
-5. **If you wanna uninstall/stop the docker containers use sudo `sudo ./uninstall.sh` or add `--clean` if you want to remove the folders and files created by the installation.
+5. **Now if everything went well without any errors, it should be up and runnning :)**
+6. **If you wanna uninstall/stop the docker containers use sudo `sudo ./uninstall.sh` or add `--clean` if you want to remove the folders and files created by the installation.
 
 ## 2. Upgrade License to Platinum
 
