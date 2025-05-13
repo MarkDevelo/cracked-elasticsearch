@@ -17,6 +17,11 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
     cd cracked-elastic
     ```
 
+2. **Rename .env.example to .env:**
+    ```bash
+    mv .env.example .env
+    ```
+
 2. **Edit the .env file to setup the elastic version you want and other stuff:**
     ```bash
     # .env - ELK Stack Configuration
