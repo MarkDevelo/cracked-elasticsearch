@@ -14,7 +14,7 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
 1.  **Clone the Repository (if you haven't already) Ignore this step if you already have the project zip:**
     ```bash
     git clone https://github.com/kagenay/cracked-elasticsearch.git
-    cd cracked-elastic
+    cd cracked-elasticsearch
     ```
 
 2. **Rename .env.example to .env:**
