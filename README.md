@@ -40,7 +40,7 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
     sudo ./start-elk.sh
     ```
 5. **Now if everything went well without any errors, it should be up and runnning :)**
-6. **If you wanna uninstall/stop the docker containers use sudo `sudo ./uninstall.sh` or add `--clean` if you want to remove the folders and files created by the installation.
+6. **If you wanna uninstall/stop the docker containers use sudo `sudo ./uninstall.sh` or add `--clean` if you want to remove the folders and files created by the installation.**
 
 ## 2. Upgrade License to Platinum
 
