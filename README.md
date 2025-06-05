@@ -24,7 +24,7 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
    ```bash
     # .env - ELK Stack Configuration
     # Please edit ELASTIC_PASSWORD before the first full run.
-    ES_VERSION=8.18.0
+    ES_VERSION=8.18.2
     ELASTIC_PASSWORD=elastic_pass
 
     # KIBANA_SYSTEM_PASSWORD will be automatically set by the start-elk.sh script
