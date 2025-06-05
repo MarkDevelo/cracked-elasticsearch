@@ -1,4 +1,4 @@
-# Instructions to run cracked version of elastic
+# Instructions to run cracked version of elastic (Huge Thanks to [kagenay](https://github.com/kagenay) all of this is his/her work.)
 This guide provides step-by-step instructions to set up and run Elasticsearch and Kibana and upgrade license to a Platinum license, and configure a Fleet Server.
 
 ## Prerequisites
@@ -17,7 +17,11 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
     cd cracked-elasticsearch
     ```
 2. **Edit the .env file to setup the elastic version you want and other stuff:**
-    ```bash
+   ```bash
+   # In my case nano; use your preffered text editor.
+   nano .env
+     ```
+   ```bash
     # .env - ELK Stack Configuration
     # Please edit ELASTIC_PASSWORD before the first full run.
     ES_VERSION=8.18.0
@@ -28,7 +32,7 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
     # You can manually set it here if you reset it some other way and want docker-compose to use it.
     KIBANA_SYSTEM_PASSWORD=F21MZEMc=90Su6L5QU+u
     ```
-3. **Run the setup and installation scripts:**
+4. **Run the setup and installation scripts:**
     ```bash
     sudo ./setup-cracked-elk.sh
     sudo ./start-elk.sh
