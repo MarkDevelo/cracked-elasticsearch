@@ -34,9 +34,11 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
     sudo ./start-elk.sh
     ```
     *If you get something like this:*
+   
 ERROR: The Compose file './docker-compose.yml' is invalid because:
 services.elasticsearch.environment.bootstrap.memory_lock contains true, which is an invalid type, it should be a string, number, or a null
 ERROR: Failed to generate TLS certificates.
+
     *You probably need to upgrade your docker compose*
    
 5. **Now if everything went well without any errors, it should be up and runnning :)**
