@@ -38,7 +38,8 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
 ERROR: The Compose file './docker-compose.yml' is invalid because:
 services.elasticsearch.environment.bootstrap.memory_lock contains true, which is an invalid type, it should be a string, number, or a null
 ERROR: Failed to generate TLS certificates.
-    You probably need to upgrade your docker compose
+
+  *You probably need to upgrade your docker compose*
    
 5. **Now if everything went well without any errors, it should be up and runnning :)**
 6. **If you wanna uninstall/stop the docker containers use sudo `sudo ./uninstall.sh` or add `--clean` if you want to remove the folders and files created by the installation.**
