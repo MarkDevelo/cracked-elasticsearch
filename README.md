@@ -16,13 +16,7 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
     git clone https://github.com/kagenay/cracked-elasticsearch.git
     cd cracked-elasticsearch
     ```
-
-2. **Rename .env.example to .env:**
-    ```bash
-    mv .env.example .env
-    ```
-
-3. **Edit the .env file to setup the elastic version you want and other stuff:**
+2. **Edit the .env file to setup the elastic version you want and other stuff:**
     ```bash
     # .env - ELK Stack Configuration
     # Please edit ELASTIC_PASSWORD before the first full run.
@@ -34,11 +28,17 @@ This guide provides step-by-step instructions to set up and run Elasticsearch an
     # You can manually set it here if you reset it some other way and want docker-compose to use it.
     KIBANA_SYSTEM_PASSWORD=F21MZEMc=90Su6L5QU+u
     ```
-4. **Run the setup and installation scripts:**
+3. **Run the setup and installation scripts:**
     ```bash
     sudo ./setup-cracked-elk.sh
     sudo ./start-elk.sh
     ```
+    *If you get something like this:*
+   ERROR: The Compose file './docker-compose.yml' is invalid because:
+   services.elasticsearch.environment.bootstrap.memory_lock contains true, which is an invalid type, it should be a string, number, or a null
+   ERROR: Failed to generate TLS certificates.
+    *You probably need to upgrade your docker compose*
+   
 5. **Now if everything went well without any errors, it should be up and runnning :)**
 6. **If you wanna uninstall/stop the docker containers use sudo `sudo ./uninstall.sh` or add `--clean` if you want to remove the folders and files created by the installation.**
 
